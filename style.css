@@ -38,17 +38,14 @@ nav ul li a:hover {
     color: #0073e6;
 }
 
-
-main {
-    padding: 2em;
-}
-
-section {
-    margin-bottom: 2em;
+header {
+    text-align: center;
+    padding: 1em 0;
 }
 
 footer {
     text-align: center;
     padding: 1em 0;
     background-color: #f8f8f8;
+    border-top: 1px solid #ccc;
 }
