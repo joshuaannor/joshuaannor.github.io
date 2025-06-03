@@ -1,68 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joshua Annor - Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joshua Annor - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="navigation">
-        <div class="container">
-            <nav>
-                <ul>
-                    <li><a href="#resume">Resume</a></li>
-                    <li><a href="#news">News</a></li>
-                    <li><a href="#about">About</a></li>
-                </ul>
-            </nav>
-        </div>
+<body class="bg-gray-900 text-white font-rajdhani">
+  <!-- Loading Screen -->
+  <div id="loading" class="fixed inset-0 flex items-center justify-center bg-gray-900 z-50">
+    <h1 class="text-lg md:text-2xl tracking-widest animate-pulse">Booting system...</h1>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed w-full top-0 left-0 bg-gray-800 bg-opacity-80 backdrop-blur-md z-40">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <h1 class="text-xl font-orbitron tracking-widest">JA</h1>
+      <ul class="hidden md:flex space-x-6 text-sm">
+        <li><a href="#home" class="hover:text-cyan-400">Home</a></li>
+        <li><a href="#about" class="hover:text-cyan-400">About</a></li>
+        <li><a href="#skills" class="hover:text-cyan-400">Skills</a></li>
+        <li><a href="#projects" class="hover:text-cyan-400">Projects</a></li>
+        <li><a href="#resume" class="hover:text-cyan-400">Resume</a></li>
+        <li><a href="#contact" class="hover:text-cyan-400">Contact</a></li>
+      </ul>
+      <button id="themeToggle" class="text-xl focus:outline-none md:ml-4" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
     </div>
-    <header>
-        <h1>Joshua Annor</h1>
-        <p>Computer Science Student at Old Dominion University</p>
-    </header>
+  </nav>
 
-    <section id="resume">
-        <h2>Resume</h2>
-        <h3>Education</h3>
-        <p>B.S. in Computer Science - Old Dominion University</p>
-        <p>Expected Graduation: December 2024</p>
-
-        <h3>Skills</h3>
-        <p>Programming Languages: JavaScript, Java, C++, Python</p>
-        <p>Tools & Technologies: Git, AWS, React, Node.js, MongoDB</p>
-        <p>Soft Skills: Leadership, Communication, Teamwork, Problem-Solving</p>
-
-        <h3>Experience</h3>
-        <div class="experience">
-            <h4>Software Engineer Intern - GE Vernova</h4>
-            <p>August 2023 - December 2023</p>
-            <p>Contributed to software development projects and assisted in project management tasks.</p>
-        </div>
-        <div class="experience">
-            <h4>Store Associate - Best Buy</h4>
-            <p>January 2017 - January 2019</p>
-            <p>Provided customer support and assisted with inventory management.</p>
-        </div>
-
-        <h3>Projects</h3>
-        <div class="project">
-            <h4>Drone Flight Executor</h4>
-            <p>Developed software for programming drone flight patterns.</p>
-        </div>
-        <div class="project">
-            <h4>Todo List Web App</h4>
-            <p>Created a full-stack web application using React, Node.js, and MongoDB.</p>
-        </div>
-        <div class="project">
-            <h4>Collection Organizer</h4>
-            <p>Designed and implemented a Java application to manage collections of items.</p>
-        </div>
+  <main class="pt-24" id="home">
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col items-center justify-center text-center space-y-6">
+      <h2 class="text-3xl md:text-5xl font-orbitron">Joshua Annor</h2>
+      <p class="text-lg md:text-2xl tracking-wider">Automation Engineer + Gamer at Heart</p>
+      <span id="typed" class="text-cyan-400 text-sm md:text-lg"></span>
+      <div class="space-x-4">
+        <a href="#resume" class="btn">View Resume</a>
+        <a href="#projects" class="btn">View Projects</a>
+      </div>
     </section>
 
-    <footer>
-        <p>&copy; 2023 Joshua Annor</p>
-    </footer>
+    <!-- About -->
+    <section id="about" class="py-16 container mx-auto px-4">
+      <h3 class="section-title">About Me</h3>
+      <div class="md:flex md:items-center md:space-x-10">
+        <img src="https://via.placeholder.com/150" alt="Profile" class="rounded-full mx-auto mb-6 md:mb-0" />
+        <div>
+          <p class="mb-4">I'm an automation enthusiast with a passion for gaming. When I'm not optimizing industrial processes, you'll find me strategizing in my favorite games. Gaming fuels my creativity and problem-solving approach in automation.</p>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Favorite games: Portal 2, Destiny 2, Factorio</li>
+            <li>Inspired by gaming to automate everything</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="py-16 bg-gray-800">
+      <div class="container mx-auto px-4">
+        <h3 class="section-title">Skills</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+          <div class="skill-item">Python</div>
+          <div class="skill-item">AWS</div>
+          <div class="skill-item">GitHub</div>
+          <div class="skill-item">FactoryTalk</div>
+          <div class="skill-item">Rust</div>
+          <div class="skill-item">Jenkins</div>
+          <div class="skill-item">SCADA</div>
+          <div class="skill-item">Docker</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="py-16 container mx-auto px-4">
+      <h3 class="section-title">Projects</h3>
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x200" alt="Project screenshot" class="rounded-t-md">
+          <div class="p-4">
+            <h4 class="font-semibold mb-2">Drone Flight Executor</h4>
+            <p class="text-sm mb-2">Software for programming drone flight patterns.</p>
+            <span class="text-xs text-cyan-400">#Python #Automation</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x200" alt="Project screenshot" class="rounded-t-md">
+          <div class="p-4">
+            <h4 class="font-semibold mb-2">Todo List Web App</h4>
+            <p class="text-sm mb-2">Full-stack web app using React, Node.js, and MongoDB.</p>
+            <span class="text-xs text-cyan-400">#JavaScript #FullStack</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x200" alt="Project screenshot" class="rounded-t-md">
+          <div class="p-4">
+            <h4 class="font-semibold mb-2">Collection Organizer</h4>
+            <p class="text-sm mb-2">Java app to manage collections of items.</p>
+            <span class="text-xs text-cyan-400">#Java #Desktop</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume -->
+    <section id="resume" class="py-16 bg-gray-800">
+      <div class="container mx-auto px-4 text-center">
+        <h3 class="section-title">Resume</h3>
+        <p class="mb-6">Download my resume to learn more about my experience and education.</p>
+        <a href="#" class="btn">Download PDF</a>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 container mx-auto px-4">
+      <h3 class="section-title">Contact Me</h3>
+      <form class="max-w-xl mx-auto bg-gray-800 p-6 rounded-md space-y-4">
+        <input type="text" placeholder="Name" class="input" />
+        <input type="email" placeholder="Email" class="input" />
+        <textarea placeholder="Message" rows="4" class="input"></textarea>
+        <button type="submit" class="btn w-full">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="py-4 text-center bg-gray-900 border-t border-gray-700">
+    <div class="space-x-4">
+      <a href="https://github.com/joshuaannor" class="hover:text-cyan-400">GitHub</a>
+      <a href="https://www.linkedin.com/in/joshuaannor" class="hover:text-cyan-400">LinkedIn</a>
+    </div>
+    <p class="text-xs mt-2">&copy; 2024 Joshua Annor</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="script.js"></script>
 </body>
 </html>
