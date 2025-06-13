@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Game</title>
+<style>
+ body {
+  margin: 0;
+  background: #f5f7fa;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222;
+ }
+ canvas {
+  display: block;
+  margin: 0 auto;
+  background: linear-gradient(#aee1ff, #f5f7fa);
+ }
+ #score {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255,255,255,0.8);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+ }
+ #message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.9);
+  padding: 20px 40px;
+  border-radius: 6px;
+  font-size: 1.5rem;
+  display: none;
+ }
+</style>
+</head>
+<body>
+<div id="score">Score: 0</div>
+<div id="message">Game Over</div>
+<canvas id="gameCanvas" width="800" height="400"></canvas>
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const msgEl = document.getElementById('message');
+const spriteImg = new Image();
+spriteImg.src = 'IMG_2962.png';
+const ground = canvas.height - 40;
+let keys = {};
+let obstacles = [];
+let coins = [];
+let clouds = [];
+let score = 0;
+let gameOver = false;
+
+const player = { x: 50, y: ground - 40, width: 40, height: 40, vy: 0, jump: -12, gravity: 0.6 };
+
+function reset() {
+  obstacles = [];
+  coins = [];
+  clouds = [];
+  score = 0;
+  player.y = ground - player.height;
+  player.vy = 0;
+  gameOver = false;
+  msgEl.style.display = 'none';
+}
+
+function spawnObstacle() {
+  obstacles.push({ x: canvas.width, y: ground - 40, width: 40, height: 40 });
+}
+
+function spawnCoin() {
+  coins.push({ x: canvas.width, y: ground - 80 - Math.random()*60, radius: 10 });
+}
+
+function spawnCloud() {
+  clouds.push({ x: canvas.width, y: Math.random()*200, width: 60+Math.random()*40, speed: 0.5+Math.random() });
+}
+
+function update() {
+  if (gameOver) return;
+  // Player physics
+  if (keys['Space'] || keys['ArrowUp']) {
+    if (player.y >= ground - player.height - 1) {
+      player.vy = player.jump;
+    }
+  }
+  player.vy += player.gravity;
+  player.y += player.vy;
+  if (player.y > ground - player.height) {
+    player.y = ground - player.height;
+    player.vy = 0;
+  }
+
+  // Spawn obstacles and coins
+  if (Math.random() < 0.02) spawnObstacle();
+  if (Math.random() < 0.03) spawnCoin();
+  if (Math.random() < 0.01) spawnCloud();
+
+  // Move obstacles and coins
+  obstacles.forEach(o => o.x -= 3);
+  coins.forEach(c => c.x -= 3);
+  clouds.forEach(cl => cl.x -= cl.speed);
+
+  // Remove off-screen
+  obstacles = obstacles.filter(o => o.x + o.width > 0);
+  coins = coins.filter(c => c.x + c.radius > 0);
+  clouds = clouds.filter(cl => cl.x + cl.width > 0);
+
+  // Collision detection
+  obstacles.forEach(o => {
+    if (player.x < o.x + o.width && player.x + player.width > o.x && player.y < o.y + o.height && player.y + player.height > o.y) {
+      gameOver = true;
+      msgEl.style.display = 'block';
+      setTimeout(reset, 2000);
+    }
+  });
+
+  coins.forEach((c, i) => {
+    const distX = player.x + player.width/2 - (c.x + c.radius/2);
+    const distY = player.y + player.height/2 - (c.y + c.radius/2);
+    const distance = Math.sqrt(distX*distX + distY*distY);
+    if (distance < player.width/2 + c.radius) {
+      score += 1;
+      coins.splice(i, 1);
+      scoreEl.textContent = 'Score: ' + score;
+    }
+  });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // background sky
+  ctx.fillStyle = '#aee1ff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // clouds
+  ctx.fillStyle = 'rgba(255,255,255,0.8)';
+  clouds.forEach(cl => {
+    ctx.beginPath();
+    ctx.ellipse(cl.x, cl.y, cl.width, 20, 0, 0, Math.PI*2);
+    ctx.fill();
+  });
+  // ground
+  ctx.fillStyle = '#d0d7df';
+  ctx.fillRect(0, ground, canvas.width, canvas.height - ground);
+  // player
+  ctx.drawImage(spriteImg, player.x, player.y, player.width, player.height);
+  // obstacles
+  ctx.fillStyle = '#555';
+  obstacles.forEach(o => {
+    ctx.fillRect(o.x, o.y, o.width, o.height);
+  });
+  // coins
+  ctx.fillStyle = '#f5d142';
+  coins.forEach(c => {
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.radius, 0, Math.PI*2);
+    ctx.fill();
+  });
+}
+
+function loop() {
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+window.addEventListener('keydown', (e) => {
+  keys[e.code] = true;
+});
+window.addEventListener('keyup', (e) => {
+  keys[e.code] = false;
+});
+
+spriteImg.onload = () => {
+  reset();
+  loop();
+};
+</script>
+</body>
+</html>
